@@ -1,0 +1,20 @@
+Hi,
+
+Report:
+The report is empty, and I tried to look through the files you have uploaded to see if you've just forgot to compile them, but I couldn't find any text in any of the files.
+
+So I think it is fair to assume that you haven't solved part a, and b of the first assignment.
+
+
+Code:
+c)
+I think your answer to part, c is right, It is actually a clever way of finding the residual discrete equations.
+
+d)
+Part d also seems right. You have a function, although because there is no reprot, I cannot see if you have looked at the results of the quadratidc solution or not.
+
+e) Missing
+
+f) Missing
+
+g) Missing.
