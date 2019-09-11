@@ -33,16 +33,110 @@
 
 \begin{document}
 
+{\setlength{\parindent}{0cm}
+
 \maketitle
     
 \section*{a}
 
-\section*{b}
+We are given the equation and boundary conditions
 
-From definition of $\text{D}_{\text{t}}$ we have that
-
-\begin{align}
-	[D_t D_t t] &= \frac{2}{2}
+\begin{align}\label{noe3}
+	u'' + \omega^2u = f(t), \quad u(0) = 0, \quad u'(0) = V, \quad t \in [0, T]
 \end{align}
 
+To find \(u^1\) we use the numerical representation of the double derivative. 
+
+\begin{align*}
+	u'' \sim \frac{u^{n+1} - 2u^n + u^{n-1}}{(\Delta t)^2}
+\end{align*}
+
+Putting in this in the original equation gives us 
+
+\begin{align*}
+	\frac{u^{n+1} - 2u^n + u^{n-1}}{(\Delta t)^2} + \omega^2u = f^n 
+\end{align*}
+
+Solving this for \(u^{n+1}\) gives us 
+
+\begin{align}\label{noe}
+	u^{n+1} = f^n(\Delta t)^2 - \omega^2 u^n (\Delta t)^2 + 2u^n - u^{n-1} 
+\end{align}
+
+This equation however requires us to know \(u^{-1}\) which we do not. What we do then is use the initial condition \(u'(0) = V\) and approximate the derivative. We then get
+
+\begin{align*}
+	u' \sim \frac{u^{n+1} - u^{n-1}}{2\Delta t} 
+\end{align*}
+
+Setting in the condition \(t = 0\) we get that 
+
+\begin{align*}
+	u'(0) = \frac{u^1 - u^{-1}}{2\Delta t} = V
+\end{align*}
+
+We then again solve this for \(u^{-1}\) and get
+
+\begin{align*}
+	u^{-1} = u^1 - 2V\Delta t
+\end{align*}
+
+If we set \(n = 0\), our expression for \(u^{-1}\) and \(u^0\) into equation (\ref{noe}), we get an expression for \(u^1\) 
+
+\begin{align*}
+	u^1 &= f^0(\Delta t)^2 - \omega^2 u^0 (\Delta t)^2 + 2u^0 - u^{-1} \\
+		&= \frac{1}{2}f^0(\Delta t)^2 - \frac{1}{2}\omega^2 I (\Delta t)^2 + I + V\Delta t
+\end{align*}
+
+\section*{b}
+
+We are given the exact solution
+
+\begin{align*}
+	u_e(x,t) = ct + d
+\end{align*}
+
+From our bourdary condisions we get that \(u_e(x,0) = I\) which gives us that \(d = I\) and we have that \(u_{e}'(0) = V\) which gives us that \(c = V\). So now our exact equation looks like
+
+\begin{align}\label{noe2}
+	u_e(x,t) = Vt + I
+\end{align}
+
+From definition of the derivative we have that
+
+\begin{align*}
+	[D_t D_t t]^n &= \frac{[D_t t]^{n + \frac{1}{2}} - [D_t t]^{n - \frac{1}{2}}}{\Delta t} \\
+				&= \cfrac{\cfrac{t^{n + \frac{1}{2} + \frac{1}{2}} - t^{n - \frac{1}{2} + \frac{1}{2}}}{\Delta t} - \cfrac{t^{t - \frac{1}{2} + \frac{1}{2}} - t^{n - \frac{1}{2} - \frac{1}{2}}}{\Delta t}}{\Delta t} \\
+				&= \cfrac{t^{n+1} - t^n - t^n + t^{n-1}}{(\Delta t)^2} \\
+				&= \cfrac{t^{n+1} - 2t^n + t^{n-1}}{(\Delta t)^2} \\
+				&= \cfrac{t + \Delta t - 2t + t - \Delta t}{(\Delta t)^2} \\
+				&= 0
+\end{align*}
+
+where I have used that \(t^{n+1} = (n + 1)\Delta t = t + \Delta t\).  \\
+
+Now using that \(D_t D_t\) is a linear operator, that is,
+
+\begin{align*}
+	[D_t D_t (ct + d)]^n &= c[D_t D_t t]^n + [D_t D_t d]^n \\
+						&= 0
+\end{align*}
+
+we want to show that our exact solution is a perfect solution of the discrete equations. \\
+
+We can easily see that inserted \(t = 0\) into the exact solution (\ref{noe2}) and its derivative, we get the boudary conditions. Inserting the exact solution into (\ref{noe3}) gives us an expression for \(f(t)\)
+
+\begin{align*}
+	\omega^2 (Vt + I) = f(t)
+\end{align*}
+
+Now we insert the exact solution into the descrete equation. We have already shown that \(D_t D-t (Vt + I) = 0\) so we are left with 
+
+\begin{align*}
+	[\omega^2u_e(x,t) &= f(t)]^n \\
+	[\omega^2(Vt + I) &= f(t)]^n
+\end{align*}
+
+which was what we found for (\ref{noe3}) as well. 
+}
 \end{document}

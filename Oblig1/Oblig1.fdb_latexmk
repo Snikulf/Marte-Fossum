@@ -1,9 +1,9 @@
 # Fdb version 3
-["pdflatex"] 1567682796 "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.tex" "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.pdf" "Oblig1" 1567682802
-  "Oblig1.aux" 1567682801 48 ea0edd40bb803440fd484ba769ee030a "pdflatex"
-  "Oblig1.tex" 1567682793 905 85845a8337c4018773921c75e7ec3fbd ""
-  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.aux" 1567682801 48 ea0edd40bb803440fd484ba769ee030a ""
-  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.tex" 1567682793 905 85845a8337c4018773921c75e7ec3fbd ""
+["pdflatex"] 1568234021 "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.tex" "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.pdf" "Oblig1" 1568237473
+  "Oblig1.aux" 1568234023 119 e46a1bb1abb91cefb395e86ec3225140 "pdflatex"
+  "Oblig1.tex" 1568237469 4108 3a4a9669ddeb2298eda13d26948f6ea5 ""
+  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.aux" 1568234023 119 e46a1bb1abb91cefb395e86ec3225140 ""
+  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.tex" 1568237469 4108 3a4a9669ddeb2298eda13d26948f6ea5 ""
   "c:/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1567514763 3332 103109f5612ad95229751940c61aada0 ""
   "c:/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1567513817 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1567513817 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -24,7 +24,10 @@
   "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb" 1567513817 35469 dcf3a5f2fc1862f5952e3ee5eb1d98c4 ""
   "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1567513817 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1567513817 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
+  "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1567513817 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1567513817 32726 39f0f9e62e84beb801509898a605dbd5 ""
+  "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1567513817 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "c:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1567513817 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1567515526 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "c:/texlive/2019/texmf-dist/tex/generic/babel-norsk/norsk.ldf" 1567513927 7454 81c33988aa9f2f7c4a604d2527fdb33c ""
   "c:/texlive/2019/texmf-dist/tex/generic/babel/babel.def" 1567513907 79581 0b9f5eea41bd7c87924c1917e355c00a ""
@@ -152,8 +155,8 @@
   "c:/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1567517107 4261110 d59b74a3adb29f7ad7a04777d3700af9 ""
   "c:/texlive/2019/texmf.cnf" 1567516987 673 4ae7b2f49cee444c5343a45b5d0f169c ""
   (generated)
-  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.log"
+  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.log"
+  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1/Oblig1.pdf"
   "Oblig1.pdf"
-  "c:/Users/marte/OneDrive/Documents/IN5270/IN5270-2019-Snikulf/Oblig1.pdf"
   "Oblig1.aux"
   "Oblig1.log"
