@@ -1,6 +1,7 @@
 import sympy as sym
 import numpy as np
 import matplotlib.pyplot as plt
+from tqdm import tqdm
 A, B, V, t, I, w, dt = sym.symbols('A B V t I w dt')  # global symbols
 f = None  # global variable for the source term in the ODE
 
@@ -68,25 +69,23 @@ def cubic():
 
 
 def solver(I, w, dt, T, f, V):
-
     Nt = int(round(T/dt))
     u = np.zeros(Nt+1)
     t1 = np.linspace(0, Nt*dt, Nt+1)
     u[0] = I
     u[1] = f.subs(t, 0)*dt**2 - w**2*I*dt**2 + I + V*dt
 
-    for i in range(1, Nt):
+    for i in tqdm(range(1, Nt)):
         u[i+1] = f.subs(t, dt*i)*dt**2 - w**2*u[i]*dt**2 + 2*u[i] - u[i-1]
     return u, t1
 
 
 if __name__ == '__main__':
     # main(linear())
-    # main(quadratic())
+    main(quadratic())
     # main(cubic())
-    u_exact = quadratic()
-    f = ode_source_term(u_exact)
-    u, tt = solver(1, 1, 1/1000, 1,
-                   f.subs([(w, 1), (I, 1), (V, 1), (B, 1)]), 1)
-    plt.plot(tt, u_exact(tt))
-    plt.show()
+    #u_exact = quadratic()
+    #f = ode_source_term(u_exact)
+    # u, tt = solver(1, 1, 1/1000, 1,
+    #              f.subs([(w, 1), (I, 1), (V, 1), (B, 1)]), 1)
+    # print()
