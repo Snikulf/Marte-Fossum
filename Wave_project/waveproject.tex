@@ -1,0 +1,132 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+
+\lstset{
+	numbers=left, 
+	numberstyle=\small, 
+	numbersep=8pt, 
+	frame = single, 
+	language=Python, 
+	framexleftmargin=15pt,
+	breaklines,
+	showspaces=false, 
+	showstringspaces=false, 
+	backgroundcolor=\color{white}, 
+	keywordstyle=\color{red}\bfseries, 
+	showtabs=false} 
+
+\usepackage[norsk]{babel}
+\usepackage{csquotes}
+\usepackage{todonotes} 
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{wrapfig}
+\usepackage[margin=0.7in]{geometry}
+
+\title{Wave Project - Finite difference simulation of 2D waves}
+\date{October 2019}
+\author{Marte Fossum}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+{\setlength{\parindent}{0cm}
+
+\section*{Discretization}
+
+We are give the equation 
+
+\begin{align}
+    \frac{\partial^{2} u}{\partial t^{2}}+b \frac{\partial u}{\partial t}=\frac{\partial}{\partial x}\left(q(x, y) \frac{\partial u}{\partial x}\right)+\frac{\partial}{\partial y}\left(q(x, y) \frac{\partial u}{\partial y}\right)+f(x, y, t)
+    \label{maineq}
+\end{align} 
+
+with the boundary condition
+
+\begin{align*}
+    \frac{\partial u}{\partial n} = 0
+\end{align*}
+
+on the domain \(\Omega = [0, L_x] \times [0, L_y]\), with initial conditions 
+
+\begin{align}\label{icu}
+    u(x, y, 0) =I(x, y) 
+\end{align}
+\begin{align}\label{icuder}
+    u_{t}(x, y, 0) =V(x, y) 
+\end{align}
+
+We want to discretize equation (\ref{maineq}) in order to simulate it on the computer. By letting \(u(x_i, y_j, t_n) = u_{i, j}^n\) we can rewrite each term as
+
+\begin{align*}
+    \frac{\partial^2 u}{\partial t^2} &= \frac{u_{i,j}^{n+1} - 2u_{i,j}^n + u_{i,j}^{n-1}}{\Delta t^2} \\\\ 
+    b\frac{\partial u}{\partial t} &= b\frac{u_{i,j}^{n+1}- u_{i,j}^{n-1}}{2\Delta t} \\\\
+    \frac{\partial}{\partial x}\left(q(x, y) \frac{\partial u}{\partial x}\right) &= \frac{\frac{1}{2}(q_{i,j} + q_{i+1,j})(u_{i+1,j}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i-1,j})(u_{i,j}^{n} - u_{i-1,j}^{n})}{\Delta x^2} \\\\
+    \frac{\partial}{\partial y}\left(q(x, y) \frac{\partial u}{\partial y}\right) &= \frac{\frac{1}{2}(q_{i,j} + q_{i,j+1})(u_{i,j+1}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i,j-1})(u_{i,j}^{n} - u_{i,j-1}^{n})}{\Delta y^2} \\\\
+    f(x, y, t) &= f(x_i, y_j, t_n) \\\\
+\end{align*}
+
+Inserting this into (\ref{maineq}) gives us
+
+\begin{equation}\label{mainnum}
+\begin{aligned}
+    \frac{u_{i,j}^{n+1} - 2u_{i,j}^n + u_{i,j}^{n-1}}{\Delta t^2} + b\frac{u_{i,j}^{n+1}- u_{i,j}^{n-1}}{2\Delta t} = &\frac{\frac{1}{2}(q_{i,j} + q_{i+1,j})(u_{i+1,j}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i-1,j})(u_{i,j}^{n} - u_{i-1,j}^{n})}{\Delta x^2} \\ &+ \frac{\frac{1}{2}(q_{i,j} + q_{i,j+1})(u_{i,j+1}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i,j-1})(u_{i,j}^{n} - u_{i,j-1}^{n})}{\Delta y^2} \\ &+ f(x_i, y_j, t_n)
+\end{aligned}
+\end{equation}
+
+Now we solve for \(u_{i,j}^{n+1}\).
+
+\begin{equation}\label{un} 
+\begin{aligned}
+    u_{i,j}^{n+1} = &\left(\frac{\Delta t^2}{1 + \frac{\Delta tb}{2}}\right)\left(\frac{\frac{1}{2}(q_{i,j} + q_{i+1,j})(u_{i+1,j}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i-1,j})(u_{i,j}^{n} - u_{i-1,j}^{n})}{\Delta x^2}\right) \\ &+ \left(\frac{\Delta t^2}{1 + \frac{\Delta tb}{2}}\right)\left(\frac{\frac{1}{2}(q_{i,j} + q_{i,j+1})(u_{i,j+1}^n - u_{i,j}^n) - \frac{1}{2}(q_{i,j} + q_{i,j-1})(u_{i,j}^{n} - u_{i,j-1}^{n})}{\Delta y^2}\right) \\ &+ \left(\frac{1}{1 + \frac{\Delta tb}{2}}\right)\left(\Delta t^2 f(x_i, y_j, t_n) + 2u_{i,j}^n + u_{i,j}^{n-1}\left(\frac{\Delta tb}{2} - 1\right)\right)\\\\
+\end{aligned}       
+\end{equation}      
+
+In order for us to use this equation, we have to know the first time step. To get \(u^1\) we use the initial conditions (\ref{icu}) and (\ref{icuder}). From (\ref{icu}) we get that \(u^0 = I(x, y)\) and by discretizing (\ref{icuder}) we get that 
+
+\begin{equation*}
+\begin{aligned}
+    \frac{u^1 - u^{-1}}{2 \Delta t} = V 
+    \implies u^{-1} = u^1 - 2V \Delta t
+\end{aligned}    
+\end{equation*}
+
+We set \(n = 0\) and set in for \(u^{-1}\) and solve for \(u^1\). This gives us
+
+\section*{Vertification}
+
+We now assume that \(u(x, y, t) = C\) where \(C\) is a constant. We want to show that the constant solution is a solution of the descrete equation also.
+
+\begin{equation*}
+\begin{aligned}
+    \frac{u_{i,j}^{n+1} - 2u_{i,j}^n + u_{i,j}^{n-1}}{\Delta t^2} &= \frac{C - 2C + C}{\Delta t^2} = 0 \\\\
+    b\frac{u_{i,j}^{n+1}- u_{i,j}^{n-1}}{2\Delta t} &= b\frac{C - C}{2\Delta t}
+    = 0 \\\\
+    \frac{q_{1 + \frac{1}{2}}(u_{i+1,j}^n - u_{i,j}^n) - q_{1 - \frac{1}{2}}(u_{i,j}^{n} - u_{i-1,j}^{n})}{\Delta x^2} &= \frac{q_{1 + \frac{1}{2}}(C - C) - q_{1 - \frac{1}{2}}(C - C)}{\Delta x^2}
+    = 0 \\\\
+    \frac{q_{1 + \frac{1}{2}}(u_{i+1,j}^n - u_{i,j}^n) - q_{1 - \frac{1}{2}}(u_{i,j}^{n} - u_{i-1,j}^{n})}{\Delta y^2} &= \frac{q_{1 + \frac{1}{2}}(C - C) - q_{1 - \frac{1}{2}}(C - C)}{\Delta y^2}
+    = 0
+\end{aligned}
+\end{equation*}
+
+So the constant solution is a solution for the discrete equations when \(f(x, y, t) = 0\) and the initial conditions are \(u(x, y, 0) = C\) and \(u_t(x, y, t) = 0\).
+
+\subsection*{5 possible bugs}
+
+\begin{itemize}
+    \item 1
+    \item 2
+    \item 3
+    \item 4
+    \item 5
+\end{itemize}
+
+\section*{}
+\end{document} 
