@@ -1,0 +1,13 @@
+-- Feedback for waveproject -- 
+
+First off, it is good to see a proper report written in latex. I do not see anything done wrong in the derivations,
+but you should include the calculations for the boundary conditions for verification that they have been implemented correct. 
+
+When it comes to the code, more specifically wave_project.py, there is absolutely no need to spend over 1000 lines to describe
+what could have been done in far less code. It is not very easy to read or to find mistakes. Thus, I have not read through 
+the lines to try and find the error. 
+
+Your program runs, but shows the wrong convergence rate. This is how far I got as well, thus I can't tell what is wrong with
+your code.
+
+Tip: include a .gitignore so your __pycache__ folder does not make your repository ugly. 
