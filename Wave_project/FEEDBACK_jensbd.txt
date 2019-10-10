@@ -1,0 +1,6 @@
+The derivation looks correct! Also the program runs without error.
+It would be nice if the program printed some of the results.
+I was not able to find what gave the wrong convergence rate either.
+All in all I agree with the other feedback.
+
+
