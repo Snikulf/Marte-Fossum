@@ -1,0 +1,136 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+
+\lstset{
+	numbers=left, 
+	numberstyle=\small, 
+	numbersep=8pt, 
+	frame = single, 
+	language=Python, 
+	framexleftmargin=15pt,
+	breaklines,
+	showspaces=false, 
+	showstringspaces=false, 
+	backgroundcolor=\color{white}, 
+	keywordstyle=\color{red}\bfseries, 
+	showtabs=false} 
+
+\usepackage[norsk]{babel}
+\usepackage{csquotes}
+\setlength {\marginparwidth }{2cm}
+\usepackage{todonotes} 
+\usepackage{subcaption}
+\usepackage{comment}
+\usepackage{wrapfig}
+\usepackage[margin=2cm]{geometry}
+\usepackage{amsthm}
+
+\title{Exercise 8 - Compute with a nonuniform mesh}
+\date{October 2019}
+\author{Marte Fossum}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+{\setlength{\parindent}{0cm}
+
+\section*{8a}
+
+We are given the problem
+
+\begin{equation} \label{main}
+    -u''(x) = 2
+\end{equation}
+
+for \(x \in [0,1]\) with \(u(0) = 0\) and \(u(1) = 1\), and we want to derive a linear system using P1 elements with a non-uniform mesh \(x_{0}=0<x_{1}< {...} <x_{N_{n}-1}=1\). \\
+
+We seek a solution \(u \in V\), \(V = span\{\psi_0(x), ..., \psi_{N_n - 1}(x)\}\), where \(\{\psi_i\}\) is a set of linearly independent basis functions for \(i \in \{0, ..., N_n -1\}\). Since \(u \in V\) we can write \(u\) as 
+
+\begin{equation} \label{u_sum}
+    u(x) = \sum_{i = 0}^{N_{n}-1} c_i\psi_i(x)
+\end{equation}
+
+We take the innerproduct of (\ref{main}) on both sides with some function \(v \in V\). Letting \(v = \psi_j\) gives us 
+
+\begin{align*}
+    \langle 2, \psi_j(x)\rangle &= \langle -u''(x), \psi_j(x)\rangle \\
+    \int_{0}^{1} 2\psi_j(x) dx &= \int_{0}^{1} -u''(x)\psi_j(x) dx \\
+    h_{j-1} + h_j &= -[u'(x)\psi_j(x)]_0^1 + \int_0^1 u'(x)\psi_j'(x) dx \\
+    &= \int_0^1 u'(x)\psi_j'(x) dx \\
+    &= \int_0^1 \sum_{i = 0}^{N_n -1} c_i \psi_i'(x)\psi_j'(x) dx \\
+    &= \sum_{i = 0}^{N_n - 1} c_i \int_0^1 \psi_i'(x) \psi_j'(x) dx
+\end{align*}
+
+Since \(\psi_j\) is zero everywhere but on the interval \([x_{j-1}, x_{j+1}]\), we have that the derivative is also zero everywhere except on the same interval. More precisely 
+
+\begin{equation*}
+    \psi_j'(x) = 
+    \begin{cases}
+        \frac{1}{h_{j-1}} & x \in (x_{j-1}, x_j) \\
+        -\frac{1}{h_{j}} & x \in (x_{j}, x_{j+1})\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation*}
+
+Put together we get that
+
+\begin{align*}
+    h_{j-1} + h_j &= c_{j-1}A_{j-1,j} + c_jA_{j,j} + c_{j+1}A_{j+1,j}
+\end{align*}
+
+where 
+
+\begin{align*}
+    A_{j-1,j} &= \int_{x_{j-1}}^{x_j} \frac{-1}{h_{j-1}^2} dx \\
+    &= -\frac{1}{h_j} \\\\
+    A_{j,j} &= \int_{x_{j-1}}^{x_j} \frac{1}{h_{j-1}^2} dx + \int_{x_{j}}^{x_{j+1}} \frac{1}{h_{j}^2} dx \\
+    &= \frac{1}{h_{j-1}} + \frac{1}{h_j} \\\\
+    A_{j+1,j} &= \int_{x_{j}}^{x_{j+1}} \frac{-1}{h_{j}^2} dx \\
+    &= -\frac{1}{h_j} \\\\
+\end{align*}
+
+This all works for \(j = 1,..., N_n - 2\). However we now only have \(N_n - 2\) equations, but we have \(N\) unknowns. This is because we don't have any equations for the boundary. We do know however that \(u(0) = 0\) and that \(u(1) = 1\) which gives us the last two equations \(c_0 = 0\) and \(c_{N_n -1} = 1\). 
+
+\begin{equation} \label{endelement}
+    \begin{cases}
+        h_{j-1} + h_j = -\frac{1}{h_j}c_{j+1} + \left(\frac{1}{h_j} + \frac{1}{h_{j-1}}\right)c_j - \frac{1}{h_{j-1}}c_{j-1}& \text{for \(j = 1,...,N_n + 2\)} \\
+        c_0 = 0 & \text{for \(j = 0\)} \\
+        c_{N_n - 1} = 1 & \text{for \(j = N_n - 1\)} \\
+    \end{cases}
+\end{equation}
+
+\newpage 
+
+\section*{8b}
+
+We want to use the finite difference method to discretize \(u''(x_i) = [D_x D_x u]_i\) and comepare this to the finite element. 
+
+\begin{align} \label{diff}
+    u''(x_i) &= [D_x(D_x u)]_i \nonumber \\ \nonumber \\
+            &= \frac{[D_x u]_{i + \frac{1}{2}} - [D_x u]_{i - \frac{1}{2}}}{x_{i + \frac{1}{2}} - x_{i - \frac{1}{2}}} \nonumber \\\nonumber\\
+            &= \frac{1}{x_{i + \frac{1}{2}} - x_{i - \frac{1}{2}}}\left(\frac{u_{i+\frac{1}{2} + \frac{1}{2}} - u_{i + \frac{1}{2} - \frac{1}{2}}}{x_{i + \frac{1}{2} + \frac{1}{2}} - x_{i + \frac{1}{2} - \frac{1}{2}}} - \frac{u_{i-\frac{1}{2} + \frac{1}{2}} - u_{i - \frac{1}{2} - \frac{1}{2}}}{x_{i - \frac{1}{2} + \frac{1}{2}} - x_{i - \frac{1}{2} - \frac{1}{2}}}\right) \nonumber \\\nonumber\\
+            &= \frac{1}{x_{i + \frac{1}{2}} - x_{i - \frac{1}{2}}}\left(\frac{u_{i+1} - u_i}{x_{i+1} - x_i} - \frac{u_i - u_{i-1}}{x_i - x_{i-1}}\right) \nonumber\\\nonumber\\
+            &= \frac{2}{x_{i+1} - x_{i-1}}\left(\frac{u_{i+1} - u_i}{x_{i+1} - x_i} - \frac{u_i - u_{i-1}}{x_i - x_{i-1}}\right) 
+\end{align}
+
+We have that each interval between points \(x_i\) and \(x_{i+1}\) has length \(h_i\), so substituting \(h_i = x_{i+1} - x_i\) into (\ref{main}) and (\ref{diff}) gives 
+
+\begin{equation*}
+    -u''(x_i) = - \frac{2}{h_{i} + h_{i-1}}\left(\frac{u_{i+1} - u_i}{h_i} - \frac{u_i - u_{i-1}}{h_{i-1}}\right) = 2
+\end{equation*}
+
+\begin{align} \label{enddisc}
+    \implies h_i + h_{i-1} &= -\frac{u_{i+1} - u_i}{h_i} + \frac{u_i - u_{i-1}}{h_{i-1}} \nonumber \\ \nonumber \\
+    &= -\frac{1}{h_i}u_{i+1} + \left(\frac{1}{h_i} + \frac{1}{h_{i-1}}\right)u_i - \frac{1}{h_{i-1}}u_{i-1}
+\end{align}
+
+Comparing the end result for the discrete method (\ref{enddisc}) with the result for the finite element method (\ref{endelement}) we can see that they are the same type of linear systems. 
+
+\end{document}
