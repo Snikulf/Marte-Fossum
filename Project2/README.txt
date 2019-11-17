@@ -1,0 +1,3 @@
+I didn't manage to install FEniCS on my computer, so I did all the programming in Jupiter Notebook on the UiO servers as it's already installed there. And then I just copy-pasted the code into a .py file. Hopefully it works the same if FEniCS is installed on the computer. 
+
+For part e), the last h takes a lot of time to run, so I would suggest cutting down the loop to only 4 steps if one want to test run the program. 
