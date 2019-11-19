@@ -1,0 +1,28 @@
+For the report: 
+Tt is nicely written but with some mistakes. 
+The variational form should be implemented after doing integration by part. 
+You state that you do this for task f), however I don't understand why you didn't do it from the start.
+Remember that what you write in b) only holds for a single Picard iteration.
+Seems like the tasks e) and f) have not been properly accomplished, although it at least explains the observations and attempts to find solutions.
+
+For the implementation: 
+The program runs as stated in the report. 
+For task e) the E/h is not constant. 
+I think there are several errors causing this:
+	In your report you have not used integration by parts to get the variational form.
+	FEniCS demands you to do this.
+	In this way you would have also accounted for the Neumann boundary condition.
+	Instead you have implemented a Dirichlet boundary condition which is not correct.
+	Also it is stated in the problem that dt=dx**2, but you have dt=dx.
+There must be something else, but I'm not sure what, however I think those are the most important in terms of misunderstanding.
+Possibly check that the Picard iteration is correctly done, you could do several just to check this.
+
+Also, you are not changing the time variable in the source term (f.t=t) as you update the time.
+ 
+I guess the same errors applies for task f). There is another error somewhere, but even after trying to do some investigation I can't find it unfortunately
+Seems like the numerical scheme is adding some term that shouldn't be there for every timestep though, from printing the solution at each timestep.
+
+In task g) I believe the point was to list possible errors of a correctly implemented scheme (errors due to numerical integration, dicretization, round-off errors etc) and not particularly what is giving errors in your program.
+
+Hope it helps!
+
