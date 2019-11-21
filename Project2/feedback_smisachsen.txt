@@ -5,6 +5,25 @@ The report is nicely written and looks good, but I found a couple of things to b
   fenics. As far as I've understood having second order
   derivatives in the a(u, v) causes problems in Fenics, and may
   explain the errors we see later. I saw that what I think is the
-  correct a(u, v) was commented out in the .py file,
+  correct a(u, v) was commented out in the .py file, so maybe you tried that
+  a as well? The Picard iteration is done using the right substitution (u = u^-)
+  but will be wrong due to the lack of integration by parts.
 
-2. 
+2. In d) I think you should've choosen an exact constant solution that is not
+  u(x, t) = 1. If you want to test an implementation several mistakes may lead
+  to the result being 1, instead I would choose some random number that is really
+  unlikely to occur by chance.
+
+3. In e) we are supposed to use dt = dx^2, as far as I can see this is not done,
+  as we will have dx = dt.
+
+4. You could have mentioned the error from the picard method in the list of errors
+ but this isn't anything major.
+
+
+All in all the implementation has a few issued that yield the incorrect results,
+but I think it's possible to get this to work with a few hours of debugging. The
+report was nicely written, and contains brief discussions around what can cause
+the errors we see when running the program.
+
+Have a nice day!
