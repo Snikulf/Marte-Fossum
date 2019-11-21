@@ -1,0 +1,10 @@
+The report is nicely written and looks good, but I found a couple of things to be missing:
+
+1. The integration by parts should have been done to (2) in
+  order to obtain the a(u, v) = L(v) formulation needed for
+  fenics. As far as I've understood having second order
+  derivatives in the a(u, v) causes problems in Fenics, and may
+  explain the errors we see later. I saw that what I think is the
+  correct a(u, v) was commented out in the .py file,
+
+2. 
